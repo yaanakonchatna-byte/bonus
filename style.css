@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.game-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+h1 {
+    color: #333;
+    font-size: 1.5em;
+}
+
+input[type="number"], button {
+    padding: 10px;
+    margin: 8px 0;
+    width: 90%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#message {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+#attemptsLeft {
+    margin-top: 10px;
+    color: #555;
+}
+
+#previousGuesses {
+    margin-top: 10px;
+    font-style: italic;
+    font-size: 0.9em;
+}

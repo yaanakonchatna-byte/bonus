@@ -24,6 +24,7 @@ function initializeGame() {
 
     // 3. Оновлюємо інтерфейс
     messageDisplay.textContent = "Спробуйте вгадати число!";
+    messageDisplay.style.color = '#333'; // Повертаємо стандартний колір
     attemptsLeftDisplay.textContent = `Залишилось спроб: ${attempts}`;
     previousGuessesDisplay.textContent = "Попередні спроби: ";
     guessInput.value = '';
@@ -33,43 +34,58 @@ function initializeGame() {
     newGameButton.style.display = 'none';
     guessInput.disabled = false;
     submitGuessButton.disabled = false;
+    guessInput.focus();
 }
 
 // Функція, що виконується при натисканні кнопки "Вгадати"
 function checkGuess() {
-    if (gameEnded) return; // Ігноруємо клік, якщо гра завершена
+    if (gameEnded) return;
 
     const userGuess = parseInt(guessInput.value);
 
     // Валідація введення
     if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
         messageDisplay.textContent = "Будь ласка, введіть дійсне число від 1 до 100.";
+        messageDisplay.style.color = 'gray';
         guessInput.value = '';
         return;
     }
 
-    // Зменшення спроб
+    // Зменшення спроб та збереження спроби
     attempts--;
-    
-    // Збереження спроби
     previousGuesses.push(userGuess);
 
-    // Перевірка числа
+    // 1. Перевірка на успіх
     if (userGuess === randomNumber) {
         // Успіх
         messageDisplay.textContent = `🎉 Вітаємо! Ви вгадали число ${randomNumber}!`;
         messageDisplay.style.color = '#4CAF50';
         endGame(true);
-    } else if (attempts === 0) {
+    } 
+    // 2. Перевірка на програш
+    else if (attempts === 0) {
         // Програш
         messageDisplay.textContent = `😢 Ви програли! Загадане число було ${randomNumber}.`;
         messageDisplay.style.color = 'red';
         endGame(false);
-    } else {
-        // Продовження гри
-        const hint = userGuess < randomNumber ? "Занадто мало!" : "Занадто багато!";
+    } 
+    // 3. Продовження гри та надання підказки
+    else {
+        
+        const difference = Math.abs(userGuess - randomNumber); // Обчислюємо абсолютну різницю
+        let hint;
+
+        if (difference <= 10) {
+            // Якщо різниця 10 або менше
+            hint = "🔥 Уже близько! Лишилося зовсім трохи!";
+            messageDisplay.style.color = 'red';
+        } else {
+            // Звичайна підказка
+            hint = userGuess < randomNumber ? "Занадто мало!" : "Занадто багато!";
+            messageDisplay.style.color = 'orange'; 
+        }
+        
         messageDisplay.textContent = hint;
-        messageDisplay.style.color = 'orange';
     }
 
     // Оновлення інтерфейсу після перевірки
